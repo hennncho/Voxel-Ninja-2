@@ -2,85 +2,109 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 
 public class PlayerMovement : MonoBehaviour
 {
     //Компоненты
-    private PlayerInputController input;
-    private Rigidbody rb;
-    private CapsuleCollider col;
+    private PlayerInputController playerInput;    
+    private CharacterController character;    
 
-    //Движение
+    //Бег
     [SerializeField] private float moveSpeed;    
 
     //Прыжок
-    [SerializeField] private float jumpVelocity;
-    [SerializeField] private float distanceToGround;
-    [SerializeField] private LayerMask groundLayer;
-    private float jumpCount;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;    
+    [HideInInspector] public float velocity;
+    [HideInInspector] public float jumpCount;
+    [HideInInspector] public bool isOnGround;
+    private Vector3 vDirection;
 
-    //Кувырок
-    [SerializeField] private float rollTime;
-    [SerializeField] private float rollSpeed;    
+    //Рывок
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float dashTime;  
+    [HideInInspector] public bool isDashing;
+    private float dashStartTime;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        input = GetComponent<PlayerInputController>();
-        col = GetComponent<CapsuleCollider>();
-    }
+        character = GetComponent<CharacterController>();
+        playerInput = GetComponent<PlayerInputController>();        
+    }    
 
     private void Update()
-    {
+    {        
+        ApplyGravity();
         Jump();
-        Roll();
-    }
-
-    private void FixedUpdate()
-    {
-        if (input.direction.magnitude > 0f)
+        Dash();
+        isOnGround = character.isGrounded;
+        if (playerInput.direction.magnitude >= 0.1f)
         {
             Move();
             Rotate();
         }        
-    }
-
+    }    
+       
     private void Move()
-    {
-        rb.MovePosition(transform.position + input.direction * moveSpeed * Time.fixedDeltaTime);
+    {        
+        character.Move(playerInput.direction.normalized * moveSpeed * Time.deltaTime);        
     }
 
     private void Rotate()
     {
-        rb.MoveRotation(input.rotation);
+        transform.rotation = Quaternion.Euler(0f, playerInput.direction.x * 90, 0f);
+    }
+   
+    private void ApplyGravity()
+    {        
+        if (character.isGrounded && velocity < -1)
+        {
+            velocity = 0;            
+        }
+        else
+        {
+            velocity += gravity * Time.deltaTime;            
+        }
+        vDirection.y = velocity;
+        character.Move(vDirection * Time.deltaTime);
     }
 
     private void Jump()
     {
-        if (CheckIfGrounded()) jumpCount = 0;
+        if (character.isGrounded)
+        {
+            jumpCount = 0;
+        }
 
-        if (input.jumpPressed && jumpCount < 1)
-        {            
-            rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+        if (playerInput.JumpButtonPressed() && jumpCount <= 1)
+        {
+            velocity += jumpForce;
             jumpCount++;
         }
     }
 
-    private bool CheckIfGrounded()
+    private void Dash()
     {
-        Vector3 capsuleBottom = new Vector3(col.bounds.center.x,
-                                col.bounds.min.y, col.bounds.center.z);
+        if (playerInput.DashButtonPressed())
+        {
+            StartCoroutine(activateDash());
+        }
 
-        bool isGrounded = Physics.CheckCapsule(col.bounds.center, capsuleBottom,
-            distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
-
-        return isGrounded;
+        IEnumerator activateDash()
+        {
+            isDashing = true;
+            dashStartTime = Time.time;
+            velocity = 0;
+            float gravityTemp = gravity;
+            gravity = 0;
+            while (Time.time < dashStartTime + dashTime)
+            {                
+                character.Move(playerInput.direction.normalized * dashSpeed * Time.deltaTime);                
+                yield return null;
+            }
+            gravity = gravityTemp;
+            isDashing = false;
+        }
     }
 
-    private void Roll()
-    {        
-           
-    }
 }
