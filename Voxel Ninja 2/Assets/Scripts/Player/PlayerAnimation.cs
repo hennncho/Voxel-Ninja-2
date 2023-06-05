@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void DoubleJumpAnimation()
     {
-        if (playerInput.JumpButtonPressed() && movement.jumpCount == 1)
+        if (playerInput.JumpButtonPressed() && movement.jumpCount == 2)
         {
             animator.SetTrigger("DoubleJump");            
         }
