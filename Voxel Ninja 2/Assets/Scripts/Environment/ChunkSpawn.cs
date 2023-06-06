@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class ChunkSpawn : MonoBehaviour
 {
-    [SerializeField] private Chunk startChunk;
-    [SerializeField] private Chunk[] ChunkPrefabs;
-    [SerializeField] private Transform player;
+    [SerializeField] private float maxAmount;
     [SerializeField] private float distanceToSpawn;
+    [SerializeField] private Transform player;
+    [SerializeField] private Chunk startChunk;    
+    [SerializeField] private Chunk[] ChunkPrefabs;       
     private float distanceToLastChunk;
     private List<Chunk> spawnedChunks = new();    
 
@@ -26,7 +27,7 @@ public class ChunkSpawn : MonoBehaviour
         distanceToLastChunk = Vector3.Distance(player.position, spawnedChunks[spawnedChunks.Count - 1].transform.position);
         if (distanceToLastChunk <= distanceToSpawn) Spawn();       
         
-        if (spawnedChunks.Count > 7)
+        if (spawnedChunks.Count > maxAmount)
         {
             Destroy(spawnedChunks[0].gameObject);
             spawnedChunks.RemoveAt(0);

@@ -7,14 +7,17 @@ public class PlayerMovement : MonoBehaviour
 {
     //Компоненты
     private PlayerInputController playerInput;    
-    private CharacterController character;    
-
+    private CharacterController character;
+    
     //Бег
     [SerializeField] private float moveSpeed;    
 
     //Прыжок
     [SerializeField] private float jumpForce;
-    [SerializeField] private float gravity;    
+    [SerializeField] private float doubleJumpForce;
+    [SerializeField] private float gravity;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float distanceToCeiling;
     [HideInInspector] public float velocity;
     [HideInInspector] public float jumpCount;
     [HideInInspector] public bool isOnGround;
@@ -36,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {        
         ApplyGravity();
         Jump();
+        ResetGravityIfHit();
         Dash();
         isOnGround = character.isGrounded;
         if (playerInput.direction.magnitude >= 0.1f)
@@ -78,9 +82,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerInput.JumpButtonPressed() && jumpCount <= 1)
         {
-            velocity += jumpForce;
+            if (jumpCount == 0) velocity += jumpForce;
+            else velocity += doubleJumpForce;
             jumpCount++;
-        }
+        }        
+    }
+    
+    private void ResetGravityIfHit()
+    {
+        bool hitUp = Physics.CheckCapsule(character.bounds.center, character.bounds.max,
+            distanceToCeiling, groundLayer, QueryTriggerInteraction.Ignore);
+        if (hitUp) velocity = 0;       
     }
 
     private void Dash()

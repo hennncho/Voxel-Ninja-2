@@ -257,6 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4331ce3c3964d904b9eb97914f06b8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAmount: 10
+  distanceToSpawn: 40
+  player: {fileID: 2859691775109431270}
   startChunk: {fileID: 1011977274}
   ChunkPrefabs:
   - {fileID: -361568734909270142, guid: 7ceb65d1921169449881fdf2c7691b55, type: 3}
@@ -276,8 +279,6 @@ MonoBehaviour:
   - {fileID: -7751651791129328345, guid: decd2ff7208df314c968e39686706840, type: 3}
   - {fileID: 7219505934626432320, guid: de2bc61345ccb6945ba6b06944ff5d19, type: 3}
   - {fileID: 8862963902401276924, guid: b384b6876efa9f3429577d0be6dc41fc, type: 3}
-  player: {fileID: 2859691775109431270}
-  distanceToSpawn: 30
 --- !u!4 &835651404
 Transform:
   m_ObjectHideFlags: 0
@@ -493,11 +494,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4331ce3c3964d904b9eb97914f06b8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAmount: 10
+  distanceToSpawn: 40
+  player: {fileID: 2859691775109431270}
   startChunk: {fileID: 619484785}
   ChunkPrefabs:
   - {fileID: 4027628614962598660, guid: 12bc0930dbe9fb7499c4f31a9c049a2e, type: 3}
-  player: {fileID: 2859691775109431270}
-  distanceToSpawn: 30
 --- !u!4 &1165267687
 Transform:
   m_ObjectHideFlags: 0
@@ -650,8 +652,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  jumpForce: 20
-  gravity: -40
+  jumpForce: 35
+  doubleJumpForce: 25
+  gravity: -50
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  distanceToCeiling: 0.1
   velocity: -0.867447
   jumpCount: 0
   isOnGround: 1
