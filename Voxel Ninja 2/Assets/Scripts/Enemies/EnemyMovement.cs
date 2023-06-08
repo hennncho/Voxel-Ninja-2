@@ -8,9 +8,8 @@ public class EnemyMovement : MonoBehaviour
 {
     [HideInInspector] public NavMeshAgent agent;
     private Transform player;
-
-    [SerializeField] private Transform patrolPoint1;
-    [SerializeField] private Transform patrolPoint2;
+    [SerializeField] public Transform patrolPoint1;
+    [SerializeField] public Transform patrolPoint2;
     [SerializeField] private float patrolSpeed;
     [SerializeField] private float chaseSpeed;
     private Vector3 currentPoint;    
@@ -23,7 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        currentPoint = patrolPoint1.position;
+        currentPoint = patrolPoint1.position;        
     }    
 
     public void Patrol()
@@ -31,11 +30,9 @@ public class EnemyMovement : MonoBehaviour
         agent.speed = patrolSpeed;
         if (!agent.hasPath)
         {
-            if (transform.position == patrolPoint1.position) currentPoint = patrolPoint2.position;
-            else currentPoint = patrolPoint1.position;
+            currentPoint = currentPoint == patrolPoint1.position ? patrolPoint2.position : patrolPoint1.position;
             agent.SetDestination(currentPoint);
         }
-        
     }
 
     public void Chase()

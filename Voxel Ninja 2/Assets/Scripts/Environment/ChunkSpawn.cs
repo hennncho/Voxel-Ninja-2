@@ -9,7 +9,7 @@ public class ChunkSpawn : MonoBehaviour
     [SerializeField] private float distanceToSpawn;
     [SerializeField] private Transform player;
     [SerializeField] private Chunk startChunk;    
-    [SerializeField] private Chunk[] ChunkPrefabs;       
+    [SerializeField] private Chunk[] ChunkPrefabs;    
     private float distanceToLastChunk;
     private List<Chunk> spawnedChunks = new();    
 
@@ -39,7 +39,7 @@ public class ChunkSpawn : MonoBehaviour
         Chunk newChank = Instantiate(ChunkPrefabs[Random.Range(0, ChunkPrefabs.Length)]);
         newChank.transform.position = 
             spawnedChunks[spawnedChunks.Count - 1].end.position - newChank.begin.localPosition;
-        spawnedChunks.Add(newChank);        
+        spawnedChunks.Add(newChank);       
     }
     
 }
