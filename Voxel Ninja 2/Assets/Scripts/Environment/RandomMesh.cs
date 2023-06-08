@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RandomMesh : MonoBehaviour
 {
+    [Range(0, 100)] [SerializeField] private int chanceToChange;
+    [Range(0, 100)] [SerializeField] private int chanceToRotate;
     [SerializeField] private Mesh defaultMesh;
-    [SerializeField] private Mesh[] meshVariants;
-    [SerializeField] private int chanceToChange;
-    [SerializeField] private int chanceToRotate;
+    [SerializeField] private Mesh[] meshVariants;   
     [SerializeField] private Vector3 rotation;
     
     private void Start()

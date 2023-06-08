@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    private EnemySpawn enemySpawn;
+
+    public Transform enemySpawnPoint;
+    public Transform enemyPatrolPoint1;
+    public Transform enemyPatrolPoint2;
+
+    private void Awake()
     {
-        
+        enemySpawn = GameObject.Find("EnemySpawner").GetComponent<EnemySpawn>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        enemySpawn.SpawnEnemy(enemySpawnPoint, enemyPatrolPoint1, enemyPatrolPoint2, gameObject);
     }
 }

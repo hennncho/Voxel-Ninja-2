@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChunkSpawner : MonoBehaviour
+public class ChunkSpawn : MonoBehaviour
 {
     [SerializeField] private Chunk chunk;
     [SerializeField] private Transform startPoint;
@@ -15,7 +15,7 @@ public class ChunkSpawner : MonoBehaviour
     private void Start()
     {
         
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 20; i++)
         {
             SpawnChunk();
         }
