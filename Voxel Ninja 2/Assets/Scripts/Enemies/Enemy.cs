@@ -7,12 +7,14 @@ public class Enemy : MonoBehaviour
     enum EnemyState { Patrolling, Chasing, Attacking }
     private EnemyState currentState;
     private EnemyMovement movementController;
-    private EnemyAttack attackController;
+    private EnemyMeleeAttack attackController;
+    private EnemyObserve observer;
 
     private void Awake()
     {
         movementController = GetComponent<EnemyMovement>();
-        attackController = GetComponent<EnemyAttack>();
+        attackController = GetComponent<EnemyMeleeAttack>();
+        observer = GetComponent<EnemyObserve>();
     }
 
     private void Update()
@@ -39,8 +41,8 @@ public class Enemy : MonoBehaviour
 
     private void ChangeState()
     {
-        if (!attackController.playerInSightRange && !attackController.playerInAttackRange) currentState = EnemyState.Patrolling;
-        if (attackController.playerInSightRange && !attackController.playerInAttackRange) currentState = EnemyState.Chasing;
-        if (attackController.playerInSightRange && attackController.playerInAttackRange) currentState = EnemyState.Attacking;
+        if (!observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Patrolling;
+        if (observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Chasing;
+        if (observer.playerInSightRange && observer.playerInAttackRange) currentState = EnemyState.Attacking;
     }
 }
