@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    enum EnemyState { Patrolling, Chasing, Attacking }
+    enum EnemyState { Patrolling, Chasing, Attacking, Dead }
     private EnemyState currentState;
     private EnemyMovement movementController;
     private EnemyMeleeAttack attackController;
     private EnemyObserve observer;
+    private EnemyHealth health;
 
     private void Awake()
     {
         movementController = GetComponent<EnemyMovement>();
         attackController = GetComponent<EnemyMeleeAttack>();
         observer = GetComponent<EnemyObserve>();
+        health = GetComponent<EnemyHealth>();
     }
 
     private void Update()
@@ -34,6 +36,10 @@ public class Enemy : MonoBehaviour
                 attackController.Attack();
                 break;
 
+            case EnemyState.Dead:
+                movementController.Stop();
+                break;
+
             default:
                 break;
         }
@@ -41,8 +47,12 @@ public class Enemy : MonoBehaviour
 
     private void ChangeState()
     {
-        if (!observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Patrolling;
-        if (observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Chasing;
-        if (observer.playerInSightRange && observer.playerInAttackRange) currentState = EnemyState.Attacking;
+        if (health.isAlive)
+        {
+            if (!observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Patrolling;
+            if (observer.playerInSightRange && !observer.playerInAttackRange) currentState = EnemyState.Chasing;
+            if (observer.playerInSightRange && observer.playerInAttackRange) currentState = EnemyState.Attacking;
+        }
+        else currentState = EnemyState.Dead;
     }
 }

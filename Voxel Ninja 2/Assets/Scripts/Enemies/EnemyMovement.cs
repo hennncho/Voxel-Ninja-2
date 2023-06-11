@@ -41,8 +41,9 @@ public class EnemyMovement : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    private void Rotate()
+    
+    public void Stop()
     {
-        transform.LookAt(agent.destination);
+        agent.SetDestination(transform.position);
     }
 }

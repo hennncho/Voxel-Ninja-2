@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
-    private PlayerInputController playerInput;
+    private PlayerInputController playerInput;    
 
     [Header("Параметры атаки")]
     [SerializeField] private int damage;
     [SerializeField] private float attackCooldown;
-    private bool alreadyAttacked;
+    [HideInInspector] public bool alreadyAttacked;
     
     [Header("Зона атаки")]
     [SerializeField] private LayerMask enemyLayer;
@@ -19,18 +19,17 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInputController>();
+        playerInput = GetComponent<PlayerInputController>();        
     }
 
     private void Update()
     {
         if (playerInput.AttackButtonPressed() && !alreadyAttacked)
         {
-            GameObject enemy = GetTarget();
-            if (enemy != null) Debug.Log(enemy.name);
+            GameObject enemy = GetTarget();            
             if (enemy != null) Attack(enemy);
-            //alreadyAttacked = true;
-            //Invoke(nameof(ResetAttack), attackCooldown);
+            alreadyAttacked = true;            
+            Invoke(nameof(ResetAttack), attackCooldown);
         }
     }
 

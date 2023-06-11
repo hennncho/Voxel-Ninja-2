@@ -21,13 +21,19 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void Awake()
     {
         movementController = GetComponent<EnemyMovement>();
-    }    
+    }
+
+    private void Start()
+    {
+        alreadyAttacked = true;
+        Invoke(nameof(ResetAttack), attackCooldown);
+    }
 
     public void Attack()
     {
+        movementController.agent.destination = transform.position;
         if (!alreadyAttacked)
-        {
-            movementController.agent.destination = transform.position;
+        {            
             GameObject player = GetTarget();
             if (player != null)
             {

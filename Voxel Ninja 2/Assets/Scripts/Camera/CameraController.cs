@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    private Vector3 distanceToPlayer;
-
-    private void Start()
-    {
-        distanceToPlayer = transform.position - player.transform.position;
-    }
+    [SerializeField] private float vSpeed;
 
     private void Update()
     {
-        transform.position = player.transform.position + distanceToPlayer;        
+        MoveCamera();
+    }
+
+    private void MoveCamera()
+    {        
+        transform.Translate(Vector3.up * vSpeed * Time.deltaTime);
+        if (player.transform.position.y > transform.position.y)
+        {
+            transform.position = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+        }
     }
 }

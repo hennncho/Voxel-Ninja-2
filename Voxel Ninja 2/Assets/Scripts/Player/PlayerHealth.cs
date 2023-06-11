@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {    
-    [SerializeField] private int maxHP;
-    public int currentHP;    
+    public int maxHP;
+    public int currentHP;
+    private BloodEffect blood;
+
+    private void Awake()
+    {
+        blood = GetComponent<BloodEffect>();
+    }
 
     private void Start()
     {
@@ -15,6 +21,6 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (currentHP > 0) currentHP -= damage;
-        
+        blood.PlayEffect();
     }
 }

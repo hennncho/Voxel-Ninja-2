@@ -5,21 +5,24 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator animator;
-    private PlayerMovement movement;
     private PlayerInputController playerInput;
+    private PlayerMovement movementController;
+    private PlayerMeleeAttack attackController;
 
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        movement = GetComponent<PlayerMovement>();
+        movementController = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInputController>();
+        attackController = GetComponent<PlayerMeleeAttack>();
     }
 
     private void Update()
     {
         RunAnimation();
         FallAnimation();
-        DoubleJumpAnimation();        
+        DoubleJumpAnimation();
+        AttackAnimation();
     }
 
     private void RunAnimation()
@@ -29,14 +32,22 @@ public class PlayerAnimation : MonoBehaviour
     
     private void FallAnimation()
     {
-        animator.SetBool("IsFalling", !movement.isOnGround && movement.velocity < -5);
+        animator.SetBool("IsFalling", !movementController.isOnGround && movementController.velocity < -5);
     }
 
     private void DoubleJumpAnimation()
     {
-        if (playerInput.JumpButtonPressed() && movement.jumpCount == 2)
+        if (playerInput.JumpButtonPressed() && movementController.jumpCount == 2)
         {
             animator.SetTrigger("DoubleJump");            
+        }
+    }
+
+    private void AttackAnimation()
+    {
+        if (playerInput.AttackButtonPressed() && !attackController.alreadyAttacked)
+        {
+            animator.SetTrigger("MeleeAttack");
         }
     }
 }
