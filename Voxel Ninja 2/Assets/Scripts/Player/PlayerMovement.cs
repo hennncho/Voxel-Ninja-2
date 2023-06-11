@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         ResetGravityIfHit();
         Dash();
         isOnGround = character.isGrounded;
+        
         if (playerInput.direction.magnitude >= 0.1f)
         {
             Move();

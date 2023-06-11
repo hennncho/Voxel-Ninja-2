@@ -30,4 +30,10 @@ public class PlayerInputController : MonoBehaviour
         bool pressed = Input.GetMouseButtonDown(0);
         return pressed;
     }
+
+    public bool ThrowButtonPressed()
+    {
+        bool pressed = Input.GetKeyDown(KeyCode.F);
+        return pressed;
+    }
 }
