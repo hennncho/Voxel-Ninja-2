@@ -19,12 +19,12 @@ public class RandomMesh : MonoBehaviour
     {        
         foreach (var mesh in GetComponentsInChildren<MeshFilter>())
         {
-            int randomX = Random.Range(1, 101);
-            if (randomX <= chanceToChange)
+            int randomForChange = Random.Range(1, 101);
+            if (randomForChange <= chanceToChange)
             {
                 mesh.sharedMesh = meshVariants[Random.Range(0, meshVariants.Length)];
-                int randomY = Random.Range(1, 101);
-                if (randomY <= chanceToRotate)
+                int randomForRotate = Random.Range(1, 101);
+                if (randomForRotate <= chanceToRotate)
                 {
                     mesh.transform.localScale = rotation;
                 }

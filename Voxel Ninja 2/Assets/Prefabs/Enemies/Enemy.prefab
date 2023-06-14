@@ -362,8 +362,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f360a40cc82a4418e52c9b2fd38c79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chanceToDrop: 50
   items:
   - {fileID: 8667224743513131552, guid: 134d33967968cab4ab62f9ad7ca79fd8, type: 3}
+  - {fileID: 2534959769575251592, guid: 56131f51d1f81254684fe899ee9b59d9, type: 3}
 --- !u!114 &7774606166638241664
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {    
-    public int maxHP;
-    public int currentHP;
+    public float maxHP;
+    [HideInInspector] public float currentHP;
     private BloodEffect blood;
 
     private void Awake()
