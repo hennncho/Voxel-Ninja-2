@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public float maxHP;
     [HideInInspector] public float currentHP;
     private BloodEffect blood;
+    [SerializeField] private GameOver gameOver;
 
     private void Awake()
     {
@@ -22,5 +23,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (currentHP > 0) currentHP -= damage;
         blood.PlayEffect();
+        if (currentHP <= 0) gameOver.Defeat();
     }
 }

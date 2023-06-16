@@ -6,15 +6,18 @@ using UnityEngine;
 public class EnemyDeath : MonoBehaviour
 {    
     private ItemDrop itemDrop;
-    [SerializeField] private float timeToDestroy;    
+    [SerializeField] private float timeToDestroy;
+    private GameOver gameOver;
 
     private void Awake()
     {        
-        itemDrop = GetComponent<ItemDrop>();        
+        itemDrop = GetComponent<ItemDrop>();
+        gameOver = FindAnyObjectByType<GameOver>();
     }   
 
     public void Die()
-    {        
+    {
+        gameOver.killCount++;
         itemDrop.Drop();
         Destroy(gameObject, timeToDestroy);        
     }
