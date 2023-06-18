@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a216fd79d3068e349b232cae15a61171, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -910,6 +910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7308915771326887353, guid: c5fcb19699e36374b8569f3f000a1aa2, type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 1256255083}
     - target: {fileID: 7308915771326887353, guid: c5fcb19699e36374b8569f3f000a1aa2, type: 3}
       propertyPath: pauseController
       value: 
